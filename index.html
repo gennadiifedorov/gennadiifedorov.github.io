@@ -44,7 +44,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 24px 20px; /* Reduced from 40px to pull content up */
         }
 
         /* Subtle background texture */
@@ -64,8 +64,8 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow-card);
             width: 100%;
-            max-width: 480px;
-            padding: 48px 40px;
+            max-width: 640px;
+            padding: 32px 40px; /* Reduced top/bottom padding from 40px */
             position: relative;
             transition: box-shadow 0.4s ease;
 
@@ -82,12 +82,12 @@
         .card__photo-wrap {
             display: flex;
             justify-content: center;
-            margin-bottom: 28px;
+            margin-bottom: 16px; /* Reduced from 24px */
         }
 
         .card__photo {
-            width: 104px;
-            height: 104px;
+            width: 96px; /* Slightly reduced from 104px */
+            height: 96px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--color-page);
@@ -100,7 +100,7 @@
             font-size: 1.375rem;
             font-weight: 600;
             color: var(--color-text);
-            margin-bottom: 4px;
+            margin-bottom: 2px; /* Reduced from 4px */
             letter-spacing: -0.01em;
         }
 
@@ -110,7 +110,7 @@
             font-size: 0.8125rem;
             font-weight: 400;
             color: var(--color-muted);
-            margin-bottom: 28px;
+            margin-bottom: 16px; /* Reduced from 24px */
             letter-spacing: 0.02em;
         }
 
@@ -121,7 +121,7 @@
             line-height: 1.45;
             color: var(--color-text);
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 16px; /* Reduced from 20px */
             padding: 0 8px;
         }
 
@@ -129,7 +129,7 @@
         .card__divider {
             height: 1px;
             background: var(--color-border);
-            margin: 0 0 24px;
+            margin: 0 0 16px; /* Reduced from 20px */
         }
 
         /* Body text */
@@ -138,11 +138,11 @@
             line-height: 1.75;
             color: var(--color-body);
             font-weight: 400;
-            margin-bottom: 32px;
+            margin-bottom: 20px; /* Reduced from 28px */
         }
 
         .card__body p {
-            margin-bottom: 14px;
+            margin-bottom: 12px; /* Reduced from 14px */
         }
 
         .card__body p:last-child {
@@ -152,7 +152,7 @@
         .card__body .closing {
             font-weight: 500;
             color: var(--color-text);
-            margin-top: 20px;
+            margin-top: 16px; /* Reduced from 20px */
         }
 
         /* CTAs */
@@ -265,7 +265,7 @@
             }
 
             .card {
-                padding: 36px 28px;
+                padding: 32px 28px;
                 border-radius: 20px;
             }
 
@@ -296,8 +296,8 @@
 
         @media (min-width: 1600px) {
             .card {
-                max-width: 520px;
-                padding: 56px 48px;
+                max-width: 720px;
+                padding: 40px 48px;
             }
         }
     </style>
@@ -309,8 +309,8 @@
                 src="https://media.licdn.com/dms/image/v2/C5603AQFDl4D0ebmPHw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1559216404432?e=1776297600&v=beta&t=d59Crd1kUGMAFTFzGPbQd_fBeLBuqiFMgYl-FuQtfYY"
                 alt="Gennadii Fedorov"
                 class="card__photo"
-                width="104"
-                height="104"
+                width="96"
+                height="96"
             />
         </div>
 
@@ -332,8 +332,8 @@
         </div>
 
         <div class="card__actions">
-            <!-- TODO: Replace href="#chat" with embedded AI chat trigger -->
-            <a href="#chat" class="btn btn--primary" data-ripple>
+            <!-- Updated button to trigger the Voiceflow chat -->
+            <a href="#" id="talk-to-cv-btn" class="btn btn--primary" data-ripple>
                 <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
@@ -349,7 +349,7 @@
     </main>
 
     <script>
-        // Ripple effect on primary button
+        // Ripple effect on buttons
         document.querySelectorAll('[data-ripple]').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const rect = this.getBoundingClientRect();
@@ -363,6 +363,32 @@
                 ripple.addEventListener('animationend', () => ripple.remove());
             });
         });
+
+        // Open Voiceflow chat when the specific button is clicked
+        document.getElementById('talk-to-cv-btn').addEventListener('click', function(e) {
+            e.preventDefault(); 
+            if (window.voiceflow && window.voiceflow.chat) {
+                window.voiceflow.chat.open();
+            }
+        });
+    </script>
+
+    <!-- Voiceflow Snippet -->
+    <script type="text/javascript">
+      (function(d, t) {
+          var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+          v.onload = function() {
+            window.voiceflow.chat.load({
+              verify: { projectID: '69cd0ec5a28c998b2e73ba29' },
+              url: 'https://general-runtime.voiceflow.com',
+              versionID: 'production',
+              voice: {
+                url: "https://runtime-api.voiceflow.com"
+              }
+            });
+          }
+          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+      })(document, 'script');
     </script>
 </body>
 </html>
